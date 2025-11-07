@@ -5,6 +5,7 @@
       <NuxtLink to="/">1</NuxtLink>
       <NuxtLink to="/tab2">2</NuxtLink>
       <NuxtLink to="/tab3">3</NuxtLink>
+      <NuxtLink to="/news">Новости</NuxtLink>
     </div>
   </nav>
 </template>
