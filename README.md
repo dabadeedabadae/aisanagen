@@ -7,8 +7,8 @@
 ## Quick start
 Убедитесь что у вас есть 
 
-Node.js 20+ (LTS)
-npm 10+
+Node.js 20+ (LTS),
+npm 10+,
 Git
 
 это для веба
