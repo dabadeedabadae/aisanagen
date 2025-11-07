@@ -1,1 +1,1 @@
-export { default } from "file:///Users/elnurayagan/Desktop/nest-nuxt-prisma-starter/apps/web/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///Users/elnurayagan/Documents/GitHub/aisanagen/apps/web/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
