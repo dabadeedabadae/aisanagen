@@ -77,7 +77,7 @@ watch(page, () => {
 <style scoped>
 .news-section {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: linear-gradient(135deg, #131b44 0%, #263366 100%);
   padding: 60px 20px;
   color: white;
 }

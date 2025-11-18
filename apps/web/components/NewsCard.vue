@@ -25,7 +25,7 @@ defineProps<{ item: { slug: string; title: string; imageUrl?: string | null; exc
 
 <style scoped>
 .news-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 22, 52, 0.55);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -80,7 +80,7 @@ defineProps<{ item: { slug: string; title: string; imageUrl?: string | null; exc
 }
 
 .card-content {
-  padding: 24px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;

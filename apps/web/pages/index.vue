@@ -91,7 +91,7 @@
 
 <style scoped>
 .main-section {
-  background: url('/uploads/background2.png') center top / cover no-repeat;
+  background: linear-gradient(135deg, rgba(14, 22, 54, 0.85), rgba(32, 44, 92, 0.82)), url('/uploads/background2.png') center top / cover no-repeat;
   background-attachment: scroll;
   min-height: 100vh;
   width: 100%;
@@ -119,7 +119,7 @@
 
 .center-box {
   width: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(12, 18, 42, 0.55);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -245,7 +245,7 @@
   .agents-section {max-width: 97%;padding: 0 2rem;}
 }
 .agent-card {
-  background: rgba(0,0,0,0.6);
+  background: rgba(11, 18, 44, 0.62);
   border-radius: 15px;
   padding: 30px 20px;
   text-align: left;

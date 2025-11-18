@@ -87,7 +87,7 @@ useHead({
 <style scoped>
 .article-section {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: linear-gradient(135deg, #131b44 0%, #28356c 100%);
   padding: 40px 20px;
   color: white;
 }

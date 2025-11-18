@@ -240,7 +240,7 @@ function removeImage() {
 <style scoped>
 .admin-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: linear-gradient(135deg, #151d4a 0%, #2d3c78 100%);
   padding: 40px 20px;
   color: #fff;
 }
@@ -270,7 +270,7 @@ function removeImage() {
 .admin-form {
   max-width: 900px;
   margin: 0 auto;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(18, 24, 58, 0.55);
   border-radius: 20px;
   padding: 40px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
