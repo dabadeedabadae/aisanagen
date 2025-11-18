@@ -2,77 +2,238 @@
 const config = useRuntimeConfig()
 const api = config.public.apiBase
 const page = ref(1)
-const limit = ref(6) // 6 карточек на страницу
+const limit = ref(6)
 
-const { data, pending, error } = await useFetch(() => `${api}/news?page=${page.value}&limit=${limit.value}`, {
+const { data, pending, error, refresh } = await useFetch(() => `${api}/news?page=${page.value}&limit=${limit.value}`, {
   key: () => `news-${page.value}`
 })
-</script>
-<template>
-  <section class="main-section">
-    <section class="container">
-      <h1 class="h1">Новости</h1>
 
-      <div v-if="pending">Загрузка...</div>
-      <div v-else-if="error" style="color:red">Ошибка загрузки</div>
+watch(page, () => {
+  refresh()
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
+</script>
+
+<template>
+  <section class="news-section">
+    <div class="news-header">
+      <h1 class="news-title">Новости</h1>
+      <p class="news-subtitle">Актуальные события и обновления</p>
+    </div>
+
+    <div class="container">
+      <div v-if="pending" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Загрузка новостей...</p>
+      </div>
+
+      <div v-else-if="error" class="error-message">
+        <span class="error-icon">⚠️</span>
+        <p>Ошибка загрузки новостей</p>
+      </div>
+
+      <div v-else-if="!data?.items || data.items.length === 0" class="empty-state">
+        <span class="empty-icon">📰</span>
+        <p>Новостей пока нет</p>
+      </div>
+
       <div v-else>
-        <div class="grid">
-          <NewsCard v-for="n in data!.items" :key="n.slug" :item="n" />
+        <div class="news-grid">
+          <NewsCard v-for="n in data.items" :key="n.slug" :item="n" />
         </div>
 
-        <div class="pager" v-if="data!.pages > 1">
-          <button :disabled="page<=1" @click="page--">Назад</button>
-          <span>{{ page }} / {{ data!.pages }}</span>
-          <button :disabled="page>=data!.pages" @click="page++">Вперед</button>
+        <div v-if="data.pages > 1" class="pagination">
+          <button
+            class="pagination-btn"
+            :disabled="page <= 1"
+            @click="page--"
+            :class="{ 'disabled': page <= 1 }"
+          >
+            <span>←</span>
+            <span>Назад</span>
+          </button>
+          
+          <div class="pagination-info">
+            <span class="current-page">{{ page }}</span>
+            <span class="separator">из</span>
+            <span class="total-pages">{{ data.pages }}</span>
+          </div>
+          
+          <button
+            class="pagination-btn"
+            :disabled="page >= data.pages"
+            @click="page++"
+            :class="{ 'disabled': page >= data.pages }"
+          >
+            <span>Вперед</span>
+            <span>→</span>
+          </button>
         </div>
       </div>
-    </section>
+    </div>
   </section>
 </template>
 
 <style scoped>
-.main-section {
-  background: url('/uploads/background2.jpg') center top / cover no-repeat;
-  background-attachment: scroll;
+.news-section {
   min-height: 100vh;
-  width: 100%;
-  padding: 40px 0;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  padding: 60px 20px;
   color: white;
-  display: flex;
-  flex-direction: column;
 }
 
-.h1 {
-  font-size: 42px;
-  margin: 18px 0 22px;
+.news-header {
   text-align: center;
-  color: inherit;
+  margin-bottom: 50px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-@media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
+.news-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  background: linear-gradient(90deg, #02ffc0, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.pager {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin: 16px 0;
+.news-subtitle {
+  font-size: 18px;
+  opacity: 0.7;
+  margin: 0;
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
-  position: relative;
-  z-index: 1;
+}
+
+.loading,
+.error-message,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #00bfff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-icon,
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+@media (max-width: 900px) {
+  .news-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .news-title {
+    font-size: 36px;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  border-color: #00bfff;
+  background: rgba(0, 191, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.pagination-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.current-page {
+  color: #00bfff;
+  font-size: 20px;
+}
+
+.separator {
+  opacity: 0.5;
+}
+
+.total-pages {
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .pagination {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pagination-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>

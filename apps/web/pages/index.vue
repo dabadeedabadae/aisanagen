@@ -15,8 +15,8 @@
           <img src="/uploads/arrow-left.svg" class="custom-arrow prev" ref="prevEl" alt="prev" />
           <Swiper
               :slides-per-view="3"
-              :centered-slides="true"
               :space-between="30"
+              :centered-slides="true"
               :loop="true"
               :navigation="{ prevEl: prevEl, nextEl: nextEl }"
               :modules="[Navigation]"
@@ -24,7 +24,15 @@
               ref="swiperRef" class="agents-carousel"
           >
             <SwiperSlide v-for="(agent, index) in agents" :key="index">
-              <div class="agent-card">{{ agent }}</div>
+              <div class="agent-card">
+                <div class="agent-status" :class="agent.statusClass">{{ agent.status }}</div>
+                <h3 class="agent-title">{{ agent.title }}</h3>
+                <p class="agent-description">{{ agent.description }}</p>
+                <ul class="agent-features">
+                  <li v-for="(feature, idx) in agent.features" :key="idx">{{ feature }}</li>
+                </ul>
+                <button class="agent-btn">Перейти к проекту</button>
+              </div>
             </SwiperSlide>
           </Swiper>
           <img src="/uploads/arrow-right.svg" class="custom-arrow next" ref="nextEl" alt="next" />
@@ -161,9 +169,9 @@
   font-size: 48px;
 }
 .agents-section{
-  max-width: 80%;
+  max-width: 98%;
   margin: 130px auto 0;
-  padding: 0 1rem;
+  padding: 0 3rem;
   position: relative;
   z-index: 1;
   justify-content: center;
@@ -180,8 +188,10 @@
 }
 .swiper-wrapper-container {
   position: relative;
-  padding-top: 10px;
-  padding-bottom: 80px;
+  padding-top: 120px;
+  padding-bottom: 150px;
+  padding-left: 100px;
+  padding-right: 100px;
   overflow: visible;
 }
 .agents-section .container {
@@ -189,10 +199,23 @@
 }
 .agents-carousel :deep(.swiper-wrapper) {
   overflow: visible !important;
+  display: flex;
+  align-items: center;
 }
 .agents-carousel :deep(.swiper-slide) {
   overflow: visible !important;
-  padding: 30px 0;
+  padding: 60px 0;
+  height: auto;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  z-index: 1;
+}
+.agents-carousel :deep(.swiper-slide-active) {
+  z-index: 10 !important;
+}
+.agents-carousel :deep(.swiper-slide) > * {
+  width: 100%;
 }
 .custom-arrow {
   width: 60px;
@@ -211,42 +234,151 @@
 }
 @media (max-width: 768px) {
   .custom-arrow {display: none;}
-  .swiper-wrapper-container {padding-bottom: 40px;}
+  .swiper-wrapper-container {padding-bottom: 40px;padding-left: 0;padding-right: 0;}
+  .agents-section {max-width: 100%;padding: 0 1rem;}
 }
 @media (max-width: 1200px) and (min-width: 769px) {
   .custom-arrow {width: 40px;height: 40px;}
   .custom-arrow.prev {left: -40px;}
   .custom-arrow.next {right: -40px;}
+  .swiper-wrapper-container {padding-left: 80px;padding-right: 80px;}
+  .agents-section {max-width: 97%;padding: 0 2rem;}
 }
 .agent-card {
   background: rgba(0,0,0,0.6);
-  border-radius: 5%;
-  padding: 60px 20px;
-  font-weight: 500;
-  text-align: center;
-  width: 250px;
-  height: 300px;
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: left;
+  width: 100%;
+  max-width: 280px;
+  min-height: 500px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   margin: 0 auto;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0 23px 4px #00bfff;
+  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  box-shadow: 0 0 12px 2px #00bfff;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+.agent-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  width: fit-content;
+}
+.agent-status.status-testing {
+  background: rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+.agent-status.status-deployed {
+  background: rgba(40, 167, 69, 0.3);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+.agent-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  color: #00bfff;
+}
+.agent-description {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  opacity: 0.9;
+}
+.agent-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px 0;
+  flex-grow: 1;
+}
+.agent-features li {
+  font-size: 13px;
+  line-height: 1.8;
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+.agent-features li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #00bfff;
+  font-weight: bold;
+  font-size: 18px;
+}
+.agent-btn {
+  background: linear-gradient(90deg, #02ffc0, #00bfff);
+  border: none;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 25px;
+  color: #000;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  margin-top: auto;
+}
+.agent-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.5);
 }
 @media (max-width: 768px) {
-  .agent-card {width: 80%;height: 250px;padding: 40px 15px;}
+  .agent-card {width: 85%;min-height: 450px;padding: 25px 15px;max-width: none;}
+  .agent-title {font-size: 20px;}
+  .agent-features li {font-size: 12px;}
+  .swiper-slide-active .agent-card {transform: scale(1.05);}
+  .swiper-slide-prev .agent-card,
+  .swiper-slide-next .agent-card {transform: scale(0.9);opacity: 0.7;filter: blur(0.5px);}
 }
 @media (max-width: 480px) {
-  .agent-card {width: 90%;}
+  .agent-card {width: 90%;min-height: 400px;padding: 20px 12px;}
+  .agent-title {font-size: 18px;}
+  .agent-description {font-size: 13px;}
 }
-.swiper-slide-active .agent-card {
-  z-index: 2;
+/* Базовые стили для всех карточек - маленькие и позади */
+.agents-carousel :deep(.swiper-slide) {
+  z-index: 1 !important;
 }
-.swiper-slide-prev .agent-card,
-.swiper-slide-next .agent-card {
-  transform: scale(0.9);
-  opacity: 0.7;
-  z-index: 1;
+.agents-carousel :deep(.swiper-slide .agent-card) {
+  transform: scale(0.75) !important;
+  opacity: 0.5 !important;
+  z-index: 1 !important;
+  filter: blur(2px) !important;
+}
+
+/* Центральная карточка - впереди и больше (переопределяет базовые стили) */
+.agents-carousel :deep(.swiper-slide-active) {
+  z-index: 10 !important;
+}
+.agents-carousel :deep(.swiper-slide-active .agent-card) {
+  transform: scale(1.2) !important;
+  z-index: 10 !important;
+  box-shadow: 0 0 23px 5px #00bfff !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Боковые карточки - позади и меньше */
+.agents-carousel :deep(.swiper-slide-prev),
+.agents-carousel :deep(.swiper-slide-next) {
+  z-index: 1 !important;
+}
+.agents-carousel :deep(.swiper-slide-prev .agent-card),
+.agents-carousel :deep(.swiper-slide-next .agent-card) {
+  transform: scale(0.7) !important;
+  opacity: 0.4 !important;
+  z-index: 1 !important;
+  filter: blur(2px) !important;
 }
 .about-section {
   max-width: 80%;
@@ -415,7 +547,67 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-const agents = ['AI Агент 1', 'AI Агент 2', 'AI Агент 3', 'AI Агент 4', 'AI Агент 5'];
+const agents = [
+  {
+    title: 'AI AntiFraud',
+    status: 'На тестировании',
+    statusClass: 'status-testing',
+    description: 'Поведенческий скоринг для antifraud.',
+    features: [
+      'Точность ~99%',
+      'SHAP, Gini, KS',
+      'Ручная проверка ↓70%',
+      'Обработка <30сек'
+    ]
+  },
+  {
+    title: 'CheckDoc',
+    status: 'На тестировании',
+    statusClass: 'status-testing',
+    description: 'AI‑доктор для диагностики и рекомендаций.',
+    features: [
+      'Анализ симптомов за 5 минут',
+      '1000+ пациентов в день',
+      'Снижение затрат в 2 раза',
+      'Точность до 90%'
+    ]
+  },
+  {
+    title: 'УниЭксперт',
+    status: 'На тестировании',
+    statusClass: 'status-testing',
+    description: 'AI для поиска нормативных документов.',
+    features: [
+      'RAG‑архитектура',
+      'Экономия времени на 70%',
+      'Охват 80% сотрудников'
+    ]
+  },
+  {
+    title: 'AI для транспорта',
+    status: 'На тестировании',
+    statusClass: 'status-testing',
+    description: 'Оптимизация городских маршрутов.',
+    features: [
+      'Анализ GPS‑данных и камер',
+      'Топливо ↓на 10%',
+      'Пассажиропоток ↑на 15%',
+      'Маршруты в реальном времени'
+    ]
+  },
+  {
+    title: 'Антикоррупционный бот',
+    status: 'Внедрен',
+    statusClass: 'status-deployed',
+    description: 'Чат‑бот по вопросам коррупции.',
+    features: [
+      'Уведомления и сценарии',
+      'Обратная связь −50%',
+      'Вовлечённость ×3',
+      'Снижение рисков'
+    ]
+  }
+];
 
 const prevEl = ref<HTMLElement | null>(null);
 const nextEl = ref<HTMLElement | null>(null);
@@ -430,7 +622,7 @@ const swiperBreakpoints = {
     slidesPerView: 2,
     spaceBetween: 20,
   },
-  1200: {
+  1024: {
     slidesPerView: 3,
     spaceBetween: 30,
   },
