@@ -27,14 +27,37 @@ model Invite {
 model News {
   id          String   @id @default(cuid())
   slug        String   @unique
-  title       String
+  title       String   // русский (по умолчанию)
+  titleKk     String?  // казахский
+  titleEn     String?  // английский
   imageUrl    String?
-  excerpt     String?
-  content     String
+  excerpt     String?  // русский
+  excerptKk   String?  // казахский
+  excerptEn   String?  // английский
+  content     String   // русский
+  contentKk   String?  // казахский
+  contentEn   String?  // английский
   published   Boolean  @default(true)
   publishedAt DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([publishedAt, published])
+}
+
+model Course {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String   // русский (по умолчанию)
+  titleKk     String?  // казахский
+  titleEn     String?  // английский
+  description String   // русский
+  descriptionKk String? // казахский
+  descriptionEn String? // английский
+  link        String
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published])
 }

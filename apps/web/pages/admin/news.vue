@@ -4,9 +4,15 @@ const api = config.public.apiBase
 
 const form = reactive({
   title: '',
+  titleKk: '',
+  titleEn: '',
   imageUrl: '',
   excerpt: '',
+  excerptKk: '',
+  excerptEn: '',
   content: '',
+  contentKk: '',
+  contentEn: '',
   published: true
 })
 
@@ -25,9 +31,15 @@ async function submit() {
     message.value = `Новость создана! Ссылка: /news/${(res as any).slug}`
     messageType.value = 'success'
     form.title = ''
+    form.titleKk = ''
+    form.titleEn = ''
     form.imageUrl = ''
     form.excerpt = ''
+    form.excerptKk = ''
+    form.excerptEn = ''
     form.content = ''
+    form.contentKk = ''
+    form.contentEn = ''
     form.published = true
     selectedFile.value = null
     imagePreview.value = null
@@ -122,7 +134,7 @@ function removeImage() {
       <!-- Заголовок -->
       <div class="form-group">
         <label class="form-label">
-          Заголовок
+          Заголовок (Русский) *
           <span class="char-count">{{ titleLength }}/180</span>
       </label>
         <input
@@ -131,6 +143,36 @@ function removeImage() {
           class="form-input"
           placeholder="Введите заголовок новости"
           required
+          maxlength="180"
+        />
+      </div>
+
+      <!-- Заголовок Казахский -->
+      <div class="form-group">
+        <label class="form-label">
+          Заголовок (Қазақша)
+          <span class="char-count">{{ form.titleKk.length }}/180</span>
+        </label>
+        <input
+          v-model="form.titleKk"
+          type="text"
+          class="form-input"
+          placeholder="Заголовок на казахском (если нет, будет использован русский)"
+          maxlength="180"
+        />
+      </div>
+
+      <!-- Заголовок Английский -->
+      <div class="form-group">
+        <label class="form-label">
+          Заголовок (English)
+          <span class="char-count">{{ form.titleEn.length }}/180</span>
+        </label>
+        <input
+          v-model="form.titleEn"
+          type="text"
+          class="form-input"
+          placeholder="Title in English (if not provided, Russian will be used)"
           maxlength="180"
         />
       </div>
@@ -176,7 +218,7 @@ function removeImage() {
       <!-- Краткое описание -->
       <div class="form-group">
         <label class="form-label">
-          Краткое описание
+          Краткое описание (Русский)
           <span class="char-count">{{ excerptLength }}/300</span>
       </label>
         <textarea
@@ -188,10 +230,40 @@ function removeImage() {
         />
       </div>
 
+      <!-- Краткое описание Казахский -->
+      <div class="form-group">
+        <label class="form-label">
+          Краткое описание (Қазақша)
+          <span class="char-count">{{ form.excerptKk.length }}/300</span>
+        </label>
+        <textarea
+          v-model="form.excerptKk"
+          class="form-textarea"
+          rows="3"
+          maxlength="300"
+          placeholder="Қысқаша сипаттама (если нет, будет использован русский)"
+        />
+      </div>
+
+      <!-- Краткое описание Английский -->
+      <div class="form-group">
+        <label class="form-label">
+          Краткое описание (English)
+          <span class="char-count">{{ form.excerptEn.length }}/300</span>
+        </label>
+        <textarea
+          v-model="form.excerptEn"
+          class="form-textarea"
+          rows="3"
+          maxlength="300"
+          placeholder="Short description in English (if not provided, Russian will be used)"
+        />
+      </div>
+
       <!-- Полный текст -->
       <div class="form-group">
         <label class="form-label">
-          Полный текст
+          Полный текст (Русский) *
       </label>
         <textarea
           v-model="form.content"
@@ -199,6 +271,32 @@ function removeImage() {
           rows="12"
           required
           placeholder="Полный текст новости"
+        />
+      </div>
+
+      <!-- Полный текст Казахский -->
+      <div class="form-group">
+        <label class="form-label">
+          Полный текст (Қазақша)
+        </label>
+        <textarea
+          v-model="form.contentKk"
+          class="form-textarea form-textarea-large"
+          rows="12"
+          placeholder="Толық мәтін (если нет, будет использован русский)"
+        />
+      </div>
+
+      <!-- Полный текст Английский -->
+      <div class="form-group">
+        <label class="form-label">
+          Полный текст (English)
+        </label>
+        <textarea
+          v-model="form.contentEn"
+          class="form-textarea form-textarea-large"
+          rows="12"
+          placeholder="Full text in English (if not provided, Russian will be used)"
         />
       </div>
 

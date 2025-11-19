@@ -18,6 +18,18 @@ __decorate([
 __decorate([
     IsOptional(),
     IsString(),
+    MaxLength(180),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "titleKk", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    MaxLength(180),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "titleEn", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
     __metadata("design:type", String)
 ], CreateNewsDto.prototype, "imageUrl", void 0);
 __decorate([
@@ -27,9 +39,31 @@ __decorate([
     __metadata("design:type", String)
 ], CreateNewsDto.prototype, "excerpt", void 0);
 __decorate([
+    IsOptional(),
+    IsString(),
+    MaxLength(300),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "excerptKk", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    MaxLength(300),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "excerptEn", void 0);
+__decorate([
     IsString(),
     __metadata("design:type", String)
 ], CreateNewsDto.prototype, "content", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "contentKk", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    __metadata("design:type", String)
+], CreateNewsDto.prototype, "contentEn", void 0);
 __decorate([
     IsOptional(),
     IsBoolean(),

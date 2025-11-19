@@ -22,12 +22,12 @@ let NewsController = class NewsController {
         this.news = news;
     }
     // Публичный список (пагинация)
-    list(page, limit) {
-        return this.news.list({ page: Number(page), limit: Number(limit) });
+    list(page, limit, lang) {
+        return this.news.list({ page: Number(page), limit: Number(limit), lang });
     }
     // Публичная детальная по slug
-    bySlug(slug) {
-        return this.news.bySlug(slug);
+    bySlug(slug, lang) {
+        return this.news.bySlug(slug, false, lang);
     }
     // Админка (без авторизации для простоты)
     create(dto) {
@@ -54,15 +54,17 @@ __decorate([
     Get('news'),
     __param(0, Query('page')),
     __param(1, Query('limit')),
+    __param(2, Query('lang')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "list", null);
 __decorate([
     Get('news/:slug'),
     __param(0, Param('slug')),
+    __param(1, Query('lang')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "bySlug", null);
 __decorate([

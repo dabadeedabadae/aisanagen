@@ -1,14 +1,15 @@
 <script setup lang="ts">
+const { locale } = useI18n()
 const config = useRuntimeConfig()
 const api = config.public.apiBase
 const page = ref(1)
 const limit = ref(6)
 
-const { data, pending, error, refresh } = await useFetch(() => `${api}/news?page=${page.value}&limit=${limit.value}`, {
-  key: () => `news-${page.value}`
+const { data, pending, error, refresh } = await useFetch(() => `${api}/news?page=${page.value}&limit=${limit.value}&lang=${locale.value}`, {
+  key: () => `news-${page.value}-${locale.value}`
 })
 
-watch(page, () => {
+watch([page, locale], () => {
   refresh()
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
@@ -17,24 +18,24 @@ watch(page, () => {
 <template>
   <section class="news-section">
     <div class="news-header">
-      <h1 class="news-title">Новости</h1>
-      <p class="news-subtitle">Актуальные события и обновления</p>
+      <h1 class="news-title">{{ $t('news.title') }}</h1>
+      <p class="news-subtitle">{{ $t('news.subtitle') }}</p>
     </div>
 
     <div class="container">
       <div v-if="pending" class="loading">
         <div class="loading-spinner"></div>
-        <p>Загрузка новостей...</p>
+        <p>{{ $t('news.loading') }}</p>
       </div>
 
       <div v-else-if="error" class="error-message">
         <span class="error-icon">⚠️</span>
-        <p>Ошибка загрузки новостей</p>
+        <p>{{ $t('news.error') }}</p>
       </div>
 
       <div v-else-if="!data?.items || data.items.length === 0" class="empty-state">
         <span class="empty-icon">📰</span>
-        <p>Новостей пока нет</p>
+        <p>{{ $t('news.empty') }}</p>
       </div>
 
       <div v-else>
@@ -50,7 +51,7 @@ watch(page, () => {
             :class="{ 'disabled': page <= 1 }"
           >
             <span>←</span>
-            <span>Назад</span>
+            <span>{{ $t('common.prev') }}</span>
           </button>
           
           <div class="pagination-info">
@@ -65,7 +66,7 @@ watch(page, () => {
             @click="page++"
             :class="{ 'disabled': page >= data.pages }"
           >
-            <span>Вперед</span>
+            <span>{{ $t('common.next') }}</span>
             <span>→</span>
           </button>
         </div>
@@ -78,7 +79,7 @@ watch(page, () => {
 .news-section {
   min-height: 100vh;
   background: linear-gradient(135deg, #131b44 0%, #263366 100%);
-  padding: 60px 20px;
+  padding: 120px 20px 60px 20px;
   color: white;
 }
 
@@ -155,6 +156,10 @@ watch(page, () => {
 }
 
 @media (max-width: 640px) {
+  .news-section {
+    padding: 100px 15px 40px 15px;
+  }
+  
   .news-grid {
     grid-template-columns: 1fr;
     gap: 20px;

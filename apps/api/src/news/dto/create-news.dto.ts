@@ -7,6 +7,16 @@ export class CreateNewsDto {
 
   @IsOptional()
   @IsString()
+  @MaxLength(180)
+  titleKk?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(180)
+  titleEn?: string;
+
+  @IsOptional()
+  @IsString()
   imageUrl?: string;
 
   @IsOptional()
@@ -14,8 +24,26 @@ export class CreateNewsDto {
   @MaxLength(300)
   excerpt?: string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(300)
+  excerptKk?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300)
+  excerptEn?: string;
+
   @IsString()
   content!: string;
+
+  @IsOptional()
+  @IsString()
+  contentKk?: string;
+
+  @IsOptional()
+  @IsString()
+  contentEn?: string;
 
   @IsOptional()
   @IsBoolean()

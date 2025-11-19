@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "home": "Home",
+    "news": "News",
+    "courses": "Courses",
+    "contacts": "Contacts"
+  },
+  "home": {
+    "title": "Intelligent AI Agents for University and City",
+    "subtitle": "New automation opportunities — from patient diagnostics to urban transport optimization and document management",
+    "more": "Learn More",
+    "agents": "Our AI Agents",
+    "about": "About AI SANA Program",
+    "aboutText1": "AI SANA Program is an initiative of the Ministry of Science and Higher Education to introduce advanced artificial intelligence technologies into education.",
+    "aboutText2": "Covers 100,000 students, stimulates the creation of DeepTech startups, development of AI competencies and technological entrepreneurship.",
+    "aboutText3": "Takes place in 3 stages: mass training (650k students), studying ML and AI business, acceleration of 1.5k startups with support from experts from Stanford, Imperial and King's College.",
+    "contacts": "Contacts",
+    "contactsText": "For cooperation and participation in AI Sana, write to",
+    "footer": "© 2025 AISana, Kozybayev University. Development of intelligent solutions for education and the city"
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Current events and updates",
+    "loading": "Loading news...",
+    "error": "Error loading news",
+    "empty": "No news yet",
+    "back": "Back to news",
+    "allNews": "All news",
+    "backToNews": "Back to news"
+  },
+  "courses": {
+    "title": "Courses for You",
+    "details": "Details"
+  },
+  "admin": {
+    "news": {
+      "title": "Admin: News",
+      "subtitle": "Create new news",
+      "titleLabel": "Title",
+      "imageLabel": "Image",
+      "excerptLabel": "Short description",
+      "contentLabel": "Full text",
+      "published": "Published",
+      "create": "Create",
+      "creating": "Creating...",
+      "success": "News created! Link: /news/{slug}",
+      "error": "Error creating news",
+      "uploadSuccess": "Image uploaded successfully",
+      "uploadError": "Error uploading image",
+      "fileHint": "Supported formats: JPG, PNG, GIF, WEBP. Maximum size: 5MB"
+    },
+    "courses": {
+      "title": "Admin: Courses",
+      "subtitle": "Create new course",
+      "titleLabel": "Name",
+      "descriptionLabel": "Description",
+      "linkLabel": "Course link",
+      "linkHint": "Link should lead to the course page",
+      "published": "Published",
+      "create": "Create",
+      "creating": "Creating...",
+      "success": "Course created!",
+      "error": "Error creating course"
+    }
+  },
+  "common": {
+    "back": "Back",
+    "next": "Next",
+    "prev": "Previous",
+    "page": "Page",
+    "of": "of"
+  },
+  "agents": {
+    "statusTesting": "On Testing",
+    "statusDeployed": "Deployed",
+    "goToProject": "Go to Project"
+  }
+}
+

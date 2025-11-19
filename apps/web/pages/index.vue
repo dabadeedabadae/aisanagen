@@ -3,14 +3,14 @@
     <section class="container main-content-container">
       <div class="center-box">
         <p class="center-box-subtitle">AI Sana Kozybayev University</p>
-        <h1>Интеллектуальные AI-агенты для университета и города</h1>
-        <p class="center-box-text">Новые возможности автоматизации — от диагностики пациентов до оптимизации городского транспорта и работы с документами</p>
+        <h1>{{ $t('home.title') }}</h1>
+        <p class="center-box-text">{{ $t('home.subtitle') }}</p>
       </div>
-      <button class="more-btn">Подробнее</button>
+      <button class="more-btn">{{ $t('home.more') }}</button>
     </section>
     <section class="agents-section" >
       <div class="container agents-container" id="ai-agents-section">
-        <h2 class="section-title">Наши AI-агенты</h2>
+        <h2 class="section-title">{{ $t('home.agents') }}</h2>
         <div class="swiper-wrapper-container">
           <img src="/uploads/arrow-left.svg" class="custom-arrow prev" ref="prevEl" alt="prev" />
           <Swiper
@@ -25,13 +25,15 @@
           >
             <SwiperSlide v-for="(agent, index) in agents" :key="index">
               <div class="agent-card">
-                <div class="agent-status" :class="agent.statusClass">{{ agent.status }}</div>
+                <div class="agent-status" :class="agent.statusClass">
+                  {{ agent.statusKey === 'testing' ? $t('agents.statusTesting') : $t('agents.statusDeployed') }}
+                </div>
                 <h3 class="agent-title">{{ agent.title }}</h3>
                 <p class="agent-description">{{ agent.description }}</p>
                 <ul class="agent-features">
                   <li v-for="(feature, idx) in agent.features" :key="idx">{{ feature }}</li>
                 </ul>
-                <button class="agent-btn">Перейти к проекту</button>
+                <a :href="agent.link" target="_blank" rel="noopener noreferrer" class="agent-btn">{{ $t('agents.goToProject') }}</a>
               </div>
             </SwiperSlide>
           </Swiper>
@@ -40,12 +42,12 @@
       </div>
     </section>
     <section class="container about-section" id="about-program-section">
-      <h2 class="section-title">О программе AI SANA</h2>
+      <h2 class="section-title">{{ $t('home.about') }}</h2>
       <div class="about-content">
         <div class="about-text">
-          <p>Программа AI SANA — инициатива Министерства науки и высшего образования для внедрения передовых технологий искусственного интеллекта в образование.</p>
-          <p>Охватывает 100 000 студентов, стимулирует создание DeepTech-стартапов, развитие ИИ-компетенций и технологического предпринимательства.</p>
-          <p>Проходит в 3 этапа: массовая подготовка (650 тыс студентов), изучение ML и AI бизнеса, акселерация 1.5 тыс стартапов с поддержкой экспертов Stanford, Imperial и King's College.</p>
+          <p>{{ $t('home.aboutText1') }}</p>
+          <p>{{ $t('home.aboutText2') }}</p>
+          <p>{{ $t('home.aboutText3') }}</p>
         </div>
         <div class="about-image">
           <img src="/uploads/aisana.png" alt="AI SANA" />
@@ -53,8 +55,8 @@
       </div>
     </section>
     <section class="container contacts-section" id="contacts-section">
-      <h2 class="section-title">Контакты</h2>
-      <p>По вопросам сотрудничества и участия в AI Sana пишите</p>
+      <h2 class="section-title">{{ $t('home.contacts') }}</h2>
+      <p>{{ $t('home.contactsText') }}</p>
       <div class="social-links">
         <a href="https://facebook.com" target="_blank" class="social-link">
           <img src="/uploads/facebook.svg" alt="Facebook" />
@@ -83,7 +85,7 @@
     </section>
     <footer class="main-footer">
       <div class="container footer-content">
-        <p class="footer-text">© 2025 AISana, Kozybayev University. Разработка интеллектуальных решений для образования и города</p>
+        <p class="footer-text">{{ $t('home.footer') }}</p>
       </div>
     </footer>
   </section>
@@ -188,14 +190,17 @@
 }
 .swiper-wrapper-container {
   position: relative;
-  padding-top: 120px;
-  padding-bottom: 150px;
+  padding-top: 180px;
+  padding-bottom: 210px;
   padding-left: 100px;
   padding-right: 100px;
   overflow: visible;
 }
 .agents-section .container {
   overflow: visible;
+}
+.agents-carousel {
+  height: 700px;
 }
 .agents-carousel :deep(.swiper-wrapper) {
   overflow: visible !important;
@@ -234,14 +239,14 @@
 }
 @media (max-width: 768px) {
   .custom-arrow {display: none;}
-  .swiper-wrapper-container {padding-bottom: 40px;padding-left: 0;padding-right: 0;}
+  .swiper-wrapper-container {padding-top: 80px;padding-bottom: 80px;padding-left: 0;padding-right: 0;}
   .agents-section {max-width: 100%;padding: 0 1rem;}
 }
 @media (max-width: 1200px) and (min-width: 769px) {
   .custom-arrow {width: 40px;height: 40px;}
   .custom-arrow.prev {left: -40px;}
   .custom-arrow.next {right: -40px;}
-  .swiper-wrapper-container {padding-left: 80px;padding-right: 80px;}
+  .swiper-wrapper-container {padding-top: 150px;padding-bottom: 180px;padding-left: 80px;padding-right: 80px;}
   .agents-section {max-width: 97%;padding: 0 2rem;}
 }
 .agent-card {
@@ -316,6 +321,9 @@
   font-size: 18px;
 }
 .agent-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
   background: linear-gradient(90deg, #02ffc0, #00bfff);
   border: none;
   padding: 12px 24px;
@@ -327,6 +335,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
   margin-top: auto;
+  box-sizing: border-box;
 }
 .agent-btn:hover {
   transform: translateY(-2px);
@@ -550,9 +559,10 @@ import 'swiper/css/navigation';
 const agents = [
   {
     title: 'AI AntiFraud',
-    status: 'На тестировании',
-    statusClass: 'status-testing',
+    statusKey: 'deployed',
+    statusClass: 'status-deployed',
     description: 'Поведенческий скоринг для antifraud.',
+    link: 'https://aisanasku.streamlit.app/',
     features: [
       'Точность ~99%',
       'SHAP, Gini, KS',
@@ -562,9 +572,10 @@ const agents = [
   },
   {
     title: 'CheckDoc',
-    status: 'На тестировании',
+    statusKey: 'testing',
     statusClass: 'status-testing',
     description: 'AI‑доктор для диагностики и рекомендаций.',
+    link: 'https://checkdoc.streamlit.app/',
     features: [
       'Анализ симптомов за 5 минут',
       '1000+ пациентов в день',
@@ -574,9 +585,10 @@ const agents = [
   },
   {
     title: 'УниЭксперт',
-    status: 'На тестировании',
-    statusClass: 'status-testing',
+    statusKey: 'deployed',
+    statusClass: 'status-deployed',
     description: 'AI для поиска нормативных документов.',
+    link: 'https://uniexpert.streamlit.app/',
     features: [
       'RAG‑архитектура',
       'Экономия времени на 70%',
@@ -585,9 +597,10 @@ const agents = [
   },
   {
     title: 'AI для транспорта',
-    status: 'На тестировании',
+    statusKey: 'testing',
     statusClass: 'status-testing',
     description: 'Оптимизация городских маршрутов.',
+    link: 'https://t.me/ai_transport_bot',
     features: [
       'Анализ GPS‑данных и камер',
       'Топливо ↓на 10%',
@@ -597,9 +610,10 @@ const agents = [
   },
   {
     title: 'Антикоррупционный бот',
-    status: 'Внедрен',
+    statusKey: 'deployed',
     statusClass: 'status-deployed',
     description: 'Чат‑бот по вопросам коррупции.',
+    link: 'https://truechat.ku.edu.kz/',
     features: [
       'Уведомления и сценарии',
       'Обратная связь −50%',

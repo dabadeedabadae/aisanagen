@@ -9,6 +9,7 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^10.2.1",
     "nuxt": "^3.13.2",
     "swiper": "^12.0.3"
   },

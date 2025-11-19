@@ -13,14 +13,14 @@ export class NewsController {
 
   // Публичный список (пагинация)
   @Get('news')
-  list(@Query('page') page?: string, @Query('limit') limit?: string) {
-    return this.news.list({ page: Number(page), limit: Number(limit) });
+  list(@Query('page') page?: string, @Query('limit') limit?: string, @Query('lang') lang?: string) {
+    return this.news.list({ page: Number(page), limit: Number(limit), lang });
   }
 
   // Публичная детальная по slug
   @Get('news/:slug')
-  bySlug(@Param('slug') slug: string) {
-    return this.news.bySlug(slug);
+  bySlug(@Param('slug') slug: string, @Query('lang') lang?: string) {
+    return this.news.bySlug(slug, false, lang);
   }
 
   // Админка (без авторизации для простоты)

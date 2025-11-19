@@ -1,10 +1,22 @@
 <script setup lang="ts">
+const { locale } = useI18n()
 const route = useRoute()
 const slug = route.params.slug as string
 const config = useRuntimeConfig()
 const api = config.public.apiBase
 
-const { data, pending, error } = await useFetch(() => `${api}/news/${slug}`)
+const localePath = (path: string) => {
+  if (locale.value === 'ru') return path;
+  return `/${locale.value}${path}`;
+};
+
+const { data, pending, error, refresh } = await useFetch(() => `${api}/news/${slug}?lang=${locale.value}`, {
+  key: () => `news-${slug}-${locale.value}`
+})
+
+watch(locale, () => {
+  refresh()
+})
 
 useHead({
   title: data.value ? `${data.value.title} - Новости` : 'Новость',
@@ -27,15 +39,15 @@ useHead({
     <div v-else-if="error" class="error-container">
       <span class="error-icon">⚠️</span>
       <h2>Новость не найдена</h2>
-      <NuxtLink to="/news" class="back-link">Вернуться к новостям</NuxtLink>
+      <NuxtLink :to="localePath('/news')" class="back-link">{{ $t('news.back') }}</NuxtLink>
     </div>
 
     <article v-else class="article-container">
       <!-- Заголовок и метаданные -->
       <header class="article-header">
-        <NuxtLink to="/news" class="back-button">
+        <NuxtLink :to="localePath('/news')" class="back-button">
           <span class="back-arrow">←</span>
-          <span>Назад к новостям</span>
+          <span>{{ $t('news.backToNews') }}</span>
         </NuxtLink>
         
         <div class="article-meta">
@@ -75,9 +87,9 @@ useHead({
 
       <!-- Футер статьи -->
       <footer class="article-footer">
-        <NuxtLink to="/news" class="footer-link">
+        <NuxtLink :to="localePath('/news')" class="footer-link">
           <span>←</span>
-          <span>Все новости</span>
+          <span>{{ $t('news.allNews') }}</span>
         </NuxtLink>
       </footer>
     </article>
@@ -88,7 +100,7 @@ useHead({
 .article-section {
   min-height: 100vh;
   background: linear-gradient(135deg, #131b44 0%, #28356c 100%);
-  padding: 40px 20px;
+  padding: 120px 20px 60px 20px;
   color: white;
 }
 
@@ -302,7 +314,7 @@ useHead({
 
 @media (max-width: 480px) {
   .article-section {
-    padding: 20px 15px;
+    padding: 100px 15px 20px 15px;
   }
 
   .article-container {

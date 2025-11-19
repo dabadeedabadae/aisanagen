@@ -1,6 +1,27 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: { strict: true },
+  modules: ['@nuxtjs/i18n'],
+  
+  i18n: {
+    locales: [
+      { code: 'kk', name: 'Қазақша', file: 'kk.json' },
+      { code: 'ru', name: 'Русский', file: 'ru.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
+    ],
+    lazy: true,
+    langDir: 'locales',
+    defaultLocale: 'ru',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+      alwaysRedirect: false,
+      fallbackLocale: 'ru'
+    }
+  },
+
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3001'
